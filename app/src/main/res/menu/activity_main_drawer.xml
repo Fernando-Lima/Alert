@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_contato"
+            android:icon="@drawable/ic_contacts_black_24dp"
+            android:title="@string/main_draw_menu_contato" />
+        <item
+            android:id="@+id/nav_localizacao"
+            android:icon="@android:drawable/ic_menu_mylocation"
+            android:title="@string/main_draw_menu_localizacao" />
+        <item
+            android:id="@+id/nav_historico"
+            android:icon="@android:drawable/ic_menu_recent_history"
+            android:title="@string/main_draw_menu_historico" />
+    </group>
+
+    <item android:title="@string/main_draw_menu_preferencia">
+        <menu>
+            <item
+                android:id="@+id/nav_config"
+                android:icon="@android:drawable/ic_menu_manage"
+                android:title="@string/main_draw_menu_config" />
+            <item
+                android:id="@+id/nav_ajuda"
+                android:icon="@android:drawable/ic_menu_help"
+                android:title="@string/main_draw_menu_ajuda" />
+        </menu>
+    </item>
+
+</menu>

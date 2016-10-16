@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Alert</string>
+    <string name="action_settings">Settings</string>
+    <string name="Alerta">btn_main_alerta</string>
+    <string name="main_btn_alerta">Emergência</string>
+    <string name="title_activity_main">Alerta</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="main_draw_menu_contato">Contatos</string>
+    <string name="main_draw_menu_localizacao">Localização</string>
+    <string name="main_draw_menu_historico">Historico</string>
+    <string name="main_draw_menu_ajuda">Ajuda</string>
+    <string name="main_draw_menu_config">Configuração</string>
+    <string name="main_draw_menu_preferencia">Preferências</string>
+    <string name="title_activity_contato">Contato</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_historico">Histórico</string>
+    <string name="title_activity_ajuda">Ajuda</string>
+    <string name="title_activity_cad_contato">Novo contato</string>
+    <string name="cadContato_btn_import">Importar Contato</string>
+    <string name="cadContato_tv_nome">Nome</string>
+    <string name="cadContato_edt_hint_nome">Nome:</string>
+    <string name="cadContato_tv_br">BR    +</string>
+    <string name="main_btn_ok">Estou bem</string>
+    <string name="main_btn_alert">Estou em perigo</string>
+
+</resources>
