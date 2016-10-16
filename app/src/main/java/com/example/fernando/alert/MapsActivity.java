@@ -14,14 +14,22 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.*;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener,
-        LocationListener{
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+        GoogleMap.OnMapLongClickListener,
+        LocationListener,
+        GoogleMap.OnMapClickListener{
 
     private LocationManager locationManager;
     private static final String TAG = "Erro";
     private GoogleMap map;
+    private String nome = "Nadine";
+    private Double latitude = -26.873576;
+    private Double longitude = -52.4085978;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,21 +38,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
     }
 
     @Override
     public void onMapReady(GoogleMap map) {
 
+        this.map = map;
+
         try {
             //Pegar minha localização atual com o locationManager
-            //locationManager =(LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager =(LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
 
             //Objeto Criteria permite a realizar buscas ao elemento Provider
-            //Criteria criteria = new Criteria();
+            Criteria criteria = new Criteria();
             //Pega o melhor provider
-            // String provider = locationManager.getBestProvider(criteria, true);
+             String provider = locationManager.getBestProvider(criteria, true);
 
 
             // Add a marker in Sydney, Australia, and move the camera.
@@ -56,24 +65,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.e(TAG,getLocalClassName() + " Error ", ex);
         }
 
-        LatLng sydney = new LatLng(-34, 151);
-        map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        LatLng sydney = new LatLng(latitude, longitude);
+        MarkerOptions marker = new MarkerOptions();
+        marker.position(sydney);
+        marker.title("Marker in Sydney");
+        map.addMarker(marker);
         map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
     }
 
     @Override
     public void onMapLongClick(LatLng latLng) {
         Toast.makeText(this,"Coordenadas: " + latLng.toString(), Toast.LENGTH_SHORT).show();
 
+        addMarcador(map,latLng);
+
+    }
+
+    public void addMarcador(GoogleMap map, LatLng latLng){
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng).title("Minha localizacao").snippet(nome);
+        Marker marker = map.addMarker(markerOptions);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //Pegar minha localização atual com o locationManager
-        locationManager =(LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
-       // locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,this);
+
     }
 
     @Override
@@ -101,6 +119,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onProviderDisabled(String provider) {
         Toast.makeText(this,"Provider desabilitato",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        Toast.makeText(this,"Coordenadas: " + latLng, Toast.LENGTH_SHORT).show();
+        CameraUpdate update = CameraUpdateFactory.newLatLng(latLng);
+        map.animateCamera(update);
     }
 }
 
