@@ -47,13 +47,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         try {
             //Pegar minha localização atual com o locationManager
-            locationManager =(LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            //locationManager =(LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
 
             //Objeto Criteria permite a realizar buscas ao elemento Provider
-            Criteria criteria = new Criteria();
+            //Criteria criteria = new Criteria();
             //Pega o melhor provider
-             String provider = locationManager.getBestProvider(criteria, true);
+            //String provider = locationManager.getBestProvider(criteria, true);
 
 
             // Add a marker in Sydney, Australia, and move the camera.
@@ -91,6 +91,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onResume() {
         super.onResume();
+        locationManager =(LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
 
     }
 

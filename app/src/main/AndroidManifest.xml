@@ -50,9 +50,6 @@
             android:name=".CadContatoActivity"
             android:label="@string/title_activity_cad_contato"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".GPSActivity"
-            android:label="GPS" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
