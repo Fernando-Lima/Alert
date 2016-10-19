@@ -24,5 +24,9 @@
     <string name="cadContato_tv_br">BR    +</string>
     <string name="main_btn_ok">Estou bem</string>
     <string name="main_btn_alert">Estou em perigo</string>
+    <string name="title_activity_hellow">Alerta</string>
+    <string name="hellow_tv_nome">Digite seu nome:</string>
+    <string name="hellow_tv_numero">Digite seu número de telefone</string>
+    <string name="hellow_btn_salvar">Salvar</string>
 
 </resources>

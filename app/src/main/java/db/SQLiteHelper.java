@@ -37,6 +37,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		// Executa cada sql passado como parametro
 		for (int i = 0; i < qtdeScripts; i++) {
 			db.execSQL(scriptSQLCreate[i]);
+			Log.i("banco","SQLiteHelper banco criado com sucesso");
 		}
 	}
 

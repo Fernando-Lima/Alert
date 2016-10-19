@@ -3,24 +3,24 @@ package com.example.fernando.alert;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import DAO.ContatoDAO;
 import model.Contato;
 
 public class CadContatoActivity extends DebugActivity {
 
     EditText edtNomeContato, edtCodigoContato, edtTelefoneContato, edtCodPais;
 
-    ContatoDAO dao;
+    private static final String TAG = "Erro";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cad_contato);
 
-        dao = new ContatoDAO(this);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -29,7 +29,10 @@ public class CadContatoActivity extends DebugActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                try {
+                }catch (Exception ex){
+                    Log.e(TAG, "Erro ao salvar no banco de dados");
+                }
             }
         });
 
@@ -37,4 +40,5 @@ public class CadContatoActivity extends DebugActivity {
         edtCodPais = (EditText)findViewById(R.id.cadContato_edt_pais);
         edtTelefoneContato = (EditText)findViewById(R.id.cadContato_edt_phone);
     }
+
 }

@@ -45,7 +45,7 @@ public class SplahActivity extends AppCompatActivity {
             }else{
                 //Permissão concedida
                 Toast.makeText(getApplicationContext(), "Permissão concedida.", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(this,MainActivity.class));
+                startActivity(new Intent(this,HellowActivity.class));
                 finish();
                 return;
             }

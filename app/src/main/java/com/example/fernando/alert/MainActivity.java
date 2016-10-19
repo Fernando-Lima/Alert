@@ -19,6 +19,11 @@ public class MainActivity extends DebugActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Button btnOk, btnAlerta;
+    String latitude;
+    String longitude;
+    String message;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +113,15 @@ public class MainActivity extends DebugActivity
         return true;
     }
     public void enviarMensagem(View v){
-        Intent it = new Intent(this,GPSActivity.class);
-        startActivity(it);
+        message = "ALERTA - Preciso de Ajuda no TCC";
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage("91291942",null,message, null,null);
+            Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_LONG).show();
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 }
