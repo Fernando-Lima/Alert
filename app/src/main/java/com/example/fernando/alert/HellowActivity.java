@@ -63,6 +63,8 @@ public class HellowActivity extends AppCompatActivity {
     public void salvarUsuario(){
         usuario.setNome(edtNome.getText().toString());
         usuario.setTelefone(edtTelefone.getText().toString());
+        usuario.setLatitude(0.0);
+        usuario.setLongitude(0.0);
         dao.salvar(usuario);
     }
 

@@ -13,14 +13,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import DAO.UsuarioDAO;
+import model.Usuario;
 
 public class MainActivity extends DebugActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Button btnOk, btnAlerta;
-    String latitude;
-    String longitude;
     String message;
 
 
@@ -53,6 +55,7 @@ public class MainActivity extends DebugActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -113,7 +116,7 @@ public class MainActivity extends DebugActivity
         return true;
     }
     public void enviarMensagem(View v){
-        message = "ALERTA - Preciso de Ajuda no TCC";
+        message = "ALERTA - Preciso de Ajuda ";
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
         try {
             SmsManager smsManager = SmsManager.getDefault();
