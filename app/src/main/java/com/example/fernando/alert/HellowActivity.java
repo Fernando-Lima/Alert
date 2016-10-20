@@ -1,5 +1,6 @@
 package com.example.fernando.alert;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,7 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import DAO.UsuarioDAO;
 import model.Usuario;
@@ -21,8 +22,10 @@ public class HellowActivity extends AppCompatActivity {
     TextView tvNome;
     private Double latitude;
     private Double longitude;
+    private AlertDialog alertDialog;
     private static final String TAG = "error";
 
+    Usuario usuario = new Usuario();
     UsuarioDAO dao;
 
     @Override
@@ -42,19 +45,25 @@ public class HellowActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                salvarUsuario();
-                startActivity(new Intent(HellowActivity.this, MainActivity.class));
-                finish();
+
+                if(edtNome.getText().toString().equals("")){
+                    Log.i("error","nome usuario em branco");
+                    return;
+                }else if (edtTelefone.getText().toString().equals("")){
+                    Log.i("error","telefone usuario em branco");
+                    return;
+                }else {
+                    salvarUsuario();
+                    startActivity(new Intent(HellowActivity.this, MainActivity.class));
+                    finish();
+                }
             }
         });
     }
     public void salvarUsuario(){
-        Usuario usuario = new Usuario();
         usuario.setNome(edtNome.getText().toString());
         usuario.setTelefone(edtTelefone.getText().toString());
         dao.salvar(usuario);
-
-
     }
 
 }
