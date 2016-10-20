@@ -21,8 +21,8 @@ public class SplahActivity extends AppCompatActivity {
         String permissions[] = new String[]{
                 Manifest.permission.SEND_SMS,
                 Manifest.permission.ACCESS_NETWORK_STATE,
-                Manifest.permission.ACCESS_FINE_LOCATION
-
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.READ_CONTACTS
         };
         //Valida Lista
 
