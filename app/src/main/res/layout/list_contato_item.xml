@@ -8,5 +8,12 @@
         android:text="TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2" />
+        android:id="@+id/list_item_contato_tv_nome" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lint_item_contato_tv_telefone" />
+
 </LinearLayout>

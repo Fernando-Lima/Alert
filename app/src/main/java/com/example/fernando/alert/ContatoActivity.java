@@ -18,7 +18,6 @@ public class ContatoActivity extends DebugActivity{
 
     List<Contato> contatos;
     ContatoDAO dao;
-    ListActivity listActivity;
 
 
     @Override
