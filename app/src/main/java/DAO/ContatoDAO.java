@@ -64,7 +64,7 @@ public class ContatoDAO {
 
     }
     public List<Contato> listar(){
-        String[] colunas = new String[]{"_id","nome","codPais","telefone"};
+        String[] colunas = new String[]{"_id","nome","telefone","latitude","longitude"};
         List<Contato> contatos;
         Cursor c = dbContato.query("tbl_contato",colunas,null,null,null,null,null,null);
 
@@ -75,8 +75,9 @@ public class ContatoDAO {
 
                 contato.setId(c.getLong(c.getColumnIndex("_id")));
                 contato.setNome(c.getString(c.getColumnIndex("nome")));
-                contato.setcodPais(c.getString(c.getColumnIndex("codPais")));
                 contato.setTelefone(c.getString(c.getColumnIndex("telefone")));
+                contato.setLatitude(c.getDouble(c.getColumnIndex("latitude")));
+                contato.setLongitude(c.getDouble(c.getColumnIndex("longitude")));
                 contatos.add(contato);
             }while (c.moveToNext());
         }

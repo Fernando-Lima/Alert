@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fernando.alert.R;
 
@@ -34,18 +35,17 @@ public class ContatoListAdapter extends ArrayAdapter<Contato> {
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null){
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(layout,null);
-        }
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        TextView tvNome = (TextView) convertView.findViewById(R.id.list_item_contato_tv_nome);
-        TextView tvTelefone = (TextView) convertView.findViewById(R.id.lint_item_contato_tv_telefone);
+        View view = inflater.inflate(layout,null);
+
+        TextView tvNome = (TextView)view.findViewById(R.id.list_item_contato_tv_nome);
+        TextView tvTelefone = (TextView) view.findViewById(R.id.lint_item_contato_tv_telefone);
 
         Contato contato = contatos.get(position);
         tvNome.setText(contato.getNome());
         tvTelefone.setText(contato.getTelefone());
 
-        return convertView;
+        return view;
     }
 }

@@ -23,9 +23,6 @@ public class MainActivity extends DebugActivity
 
     Button btnOk, btnAlerta;
     String message;
-    TextView tvnome;
-
-    UsuarioDAO dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +31,6 @@ public class MainActivity extends DebugActivity
 
         btnOk = (Button) findViewById(R.id.main_btn_ok);
         btnAlerta = (Button) findViewById(R.id.main_btn_alerta);
-
-        tvnome = (TextView)findViewById(R.id.main_tv_nome);
 
         btnAlerta.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
