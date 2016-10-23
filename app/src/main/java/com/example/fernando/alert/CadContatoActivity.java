@@ -6,21 +6,29 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import DAO.ContatoDAO;
 import model.Contato;
 
 public class CadContatoActivity extends DebugActivity {
 
     EditText edtNomeContato, edtCodigoContato, edtTelefoneContato, edtCodPais;
 
-    private static final String TAG = "Erro";
+    private static final String TAG = "banco";
+
+    ContatoDAO dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cad_contato);
 
+        dao = new ContatoDAO(this);
 
+        edtNomeContato = (EditText)findViewById(R.id.cadContato_edt_nome);
+        edtCodPais = (EditText)findViewById(R.id.cadContato_edt_pais);
+        edtTelefoneContato = (EditText)findViewById(R.id.cadContato_edt_phone);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -29,16 +37,29 @@ public class CadContatoActivity extends DebugActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                }catch (Exception ex){
-                    Log.e(TAG, "Erro ao salvar no banco de dados");
+                if (edtNomeContato.getText().toString().equals("") || edtTelefoneContato.getText().toString().equals("")){
+                    Log.i("error","nome contato em branco");
+                    return;
+                }else {
+                    try {
+                        salvarContato();
+                        Log.e(TAG, "Contato "+edtNomeContato.getText().toString()+" salvo com sucesso");
+                        finish();
+                    }catch (Exception ex){
+                        Log.e(TAG,"Erro ao salvar contato ");
+                    }
                 }
             }
         });
-
-        edtNomeContato = (EditText)findViewById(R.id.cadContato_edt_nome);
-        edtCodPais = (EditText)findViewById(R.id.cadContato_edt_pais);
-        edtTelefoneContato = (EditText)findViewById(R.id.cadContato_edt_phone);
     }
 
+    public void salvarContato(){
+        Contato contato = new Contato();
+        contato.setNome(edtNomeContato.getText().toString());
+        contato.setTelefone(edtTelefoneContato.getText().toString());
+        contato.setLatitude(0.0);
+        contato.setLongitude(0.0);
+
+        dao.salvar(contato);
+    }
 }

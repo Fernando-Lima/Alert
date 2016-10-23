@@ -2,12 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.fernando.alert">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SEND_SMS" /> <!-- Permissão para envio de mensagem -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Permissão para acesso ao gps telefone -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Permissão para localização GPS -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /><!-- Permissão para triangulação de torre celular -->
-    <uses-permission android:name="android.permission.READ_CONTACTS" /><!-- Permissão para ler contatos da agenda do celular -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Permissão para triangulação de torre celular -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <!-- Permissão para ler contatos da agenda do celular -->
     <!-- Permissão para utilização de estado da rede -->
     <application
         android:allowBackup="true"
@@ -73,7 +75,7 @@
         <activity
             android:name=".HellowActivity"
             android:label="@string/title_activity_hellow"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

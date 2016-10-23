@@ -17,14 +17,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import DAO.UsuarioDAO;
-import model.Usuario;
 
 public class MainActivity extends DebugActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Button btnOk, btnAlerta;
     String message;
+    TextView tvnome;
 
+    UsuarioDAO dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,8 @@ public class MainActivity extends DebugActivity
 
         btnOk = (Button) findViewById(R.id.main_btn_ok);
         btnAlerta = (Button) findViewById(R.id.main_btn_alerta);
+
+        tvnome = (TextView)findViewById(R.id.main_tv_nome);
 
         btnAlerta.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

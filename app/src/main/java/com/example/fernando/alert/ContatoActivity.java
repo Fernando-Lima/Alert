@@ -10,13 +10,12 @@ import android.view.View;
 import java.util.List;
 
 import DAO.ContatoDAO;
-import DAO.ContatoListAdapter;
 import model.Contato;
 
 public class ContatoActivity extends DebugActivity{
 
 
-    ContatoListAdapter adapter;
+
     List<Contato> contatos;
     ContatoDAO dao;
     ListActivity listActivity;

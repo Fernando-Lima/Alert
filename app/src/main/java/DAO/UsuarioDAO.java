@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import db.BancoDados;
 import model.Usuario;
 
@@ -14,10 +17,10 @@ import model.Usuario;
  */
 
 public class UsuarioDAO {
-    SQLiteDatabase db;// representa a conexão com o banco
+    SQLiteDatabase dbUsuario;// representa a conexão com o banco
 
     public UsuarioDAO(Context context){
-        db= BancoDados.getDB(context);
+        dbUsuario= BancoDados.getDbUsuario(context);
     }
 
     public void  salvar(Usuario usuario) {
@@ -26,16 +29,15 @@ public class UsuarioDAO {
         values.put("telefone",usuario.getTelefone());
         values.put("latitude",usuario.getLatitude());
         values.put("longitude",usuario.getLongitude());
-
-        db.insert("tbl_usuario", null, values);
+        dbUsuario.insert("tbl_usuario", null, values);
         Log.e("banco","usuarioDAO inseriu usuario");
     }
 
     public Usuario buscarUsuario(String id){
-        String[] colunas = new String[]{"_id","nome","telefone","latitude","longitude"};
+        String[] colunas = new String[]{"nome"};
         String[] args = new String[]{id};
 
-        Cursor c = db.query("tbl_usuario",colunas,"_id = ?",args,null,null,null);
+        Cursor c = dbUsuario.query("tbl_usuario",colunas,"_id = ?",args,null,null,null);
 
         c.moveToFirst();
         Usuario usuario = new Usuario();
@@ -45,5 +47,30 @@ public class UsuarioDAO {
         usuario.setLatitude(c.getDouble(c.getColumnIndex("latitude")));
         usuario.setLongitude(c.getDouble(c.getColumnIndex("longitude")));
         return usuario;
+    }
+
+    public List<Usuario> listar(){
+        String[] colunas = new String[]{"_id", "nome", "telefone", "latitude", "longitude"};
+        List<Usuario> usuarios;
+
+        Cursor c = dbUsuario.query("tbl_usuario",colunas,null,null,null,null,null,null);
+
+        usuarios = new ArrayList<Usuario>();
+
+        if(c.moveToFirst()){
+            do {
+                Usuario usuario = new Usuario();
+
+                usuario.setId(c.getLong(c.getColumnIndex("_id")));
+                usuario.setNome(c.getString(c.getColumnIndex("nome")));
+                usuario.setTelefone(c.getString(c.getColumnIndex("telefone")));
+                usuario.setLatitude(c.getDouble(c.getColumnIndex("latitude")));
+                usuario.setLongitude(c.getDouble(c.getColumnIndex("longitude")));
+
+                usuarios.add(usuario);
+            }while (c.moveToNext());
+        }
+        c.close();
+        return usuarios;
     }
 }

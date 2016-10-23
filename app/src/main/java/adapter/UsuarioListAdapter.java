@@ -1,4 +1,4 @@
-package DAO;
+package adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,25 +7,25 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.fernando.alert.R;
-
 import java.util.List;
 
-import model.Contato;
+import model.Usuario;
 
 /**
- * Created by fernando on 25/05/15.
+ * Created by fernando on 25/09/15.
  */
-public class ContatoListAdapter extends ArrayAdapter<Contato> {
+public class UsuarioListAdapter extends ArrayAdapter<Usuario> {
     Context context;
     int layout;
-    List<Contato> contatos;
+    List<Usuario> usuarios;
 
-    public ContatoListAdapter(Context context, int layout, List<Contato> contatos){
-        super(context,layout,contatos);
+    TextView tvNome;
+
+    public UsuarioListAdapter(Context context, int layout, List<Usuario> usuarios){
+        super(context,layout,usuarios);
         this.context = context;
         this.layout = layout;
-        this.contatos = contatos;
+        this.usuarios = usuarios;
     }
 
     @Override
@@ -34,7 +34,9 @@ public class ContatoListAdapter extends ArrayAdapter<Contato> {
 
         View view = inflater.inflate(layout,null);
 
-        Contato contato = contatos.get(position);
+
+        Usuario usuario = usuarios.get(position);
+        tvNome.setText(usuario.getNome());
 
         return view;
     }

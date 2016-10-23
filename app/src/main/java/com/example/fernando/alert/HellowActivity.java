@@ -25,7 +25,6 @@ public class HellowActivity extends AppCompatActivity {
     private AlertDialog alertDialog;
     private static final String TAG = "error";
 
-    Usuario usuario = new Usuario();
     UsuarioDAO dao;
 
     @Override
@@ -61,6 +60,7 @@ public class HellowActivity extends AppCompatActivity {
         });
     }
     public void salvarUsuario(){
+        Usuario usuario = new Usuario();
         usuario.setNome(edtNome.getText().toString());
         usuario.setTelefone(edtTelefone.getText().toString());
         usuario.setLatitude(0.0);

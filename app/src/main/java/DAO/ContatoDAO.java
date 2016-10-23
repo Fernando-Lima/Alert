@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,24 +17,26 @@ import model.Contato;
  */
 public class ContatoDAO {
 
-    SQLiteDatabase db;// representa a conexão com o banco
+    SQLiteDatabase dbContato;// representa a conexão com o banco
 
     public ContatoDAO(Context context) {
-        db = BancoDados.getDB(context);// Cria o Banco
+        dbContato = BancoDados.getDbContato(context);// Cria o Banco
     }
 
     public void  salvar(Contato contato) {
         ContentValues values = new ContentValues();
         values.put("nome", contato.getNome());
-        values.put("codPais",contato.getcodPais());
         values.put("telefone", contato.getTelefone());
-        db.insert("tbl_contato", null, values);
+        values.put("latitude", contato.getLatitude());
+        values.put("longitude",contato.getLongitude());
+        dbContato.insert("tbl_contato", null, values);
+        Log.e("banco","contatoDAO inseriu contato");
     }
     public Contato buscar(String id){
         String[] colunas = new String[]{"_id","nome","codPais","telefone"};
         String[] args = new String[]{id};
 
-        Cursor c = db.query("tbl_contato",colunas,"_id = ?",args,null,null,null);
+        Cursor c = dbContato.query("tbl_contato",colunas,"_id = ?",args,null,null,null);
 
         c.moveToFirst();
         Contato contato = new Contato();
@@ -46,7 +49,7 @@ public class ContatoDAO {
     }
     public void deletarContato(String id){
         String[] args = new String[]{id};
-        db.delete("tbl_contato", "_id = ?", args);
+        dbContato.delete("tbl_contato", "_id = ?", args);
 
     }
     public void alterarContato(Contato contato){
@@ -57,13 +60,13 @@ public class ContatoDAO {
 
         String[] args = new String[]{String.valueOf(contato.getId())};
 
-        db.update("tbl_contato", values, "_id = ? ", args);
+        dbContato.update("tbl_contato", values, "_id = ? ", args);
 
     }
     public List<Contato> listar(){
         String[] colunas = new String[]{"_id","nome","codPais","telefone"};
         List<Contato> contatos;
-        Cursor c = db.query("tbl_contato",colunas,null,null,null,null,null,null);
+        Cursor c = dbContato.query("tbl_contato",colunas,null,null,null,null,null,null);
 
         contatos = new ArrayList<Contato>();
         if (c.moveToFirst()){
