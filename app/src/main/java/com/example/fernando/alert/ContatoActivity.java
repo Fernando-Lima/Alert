@@ -1,6 +1,8 @@
 package com.example.fernando.alert;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +27,7 @@ public class ContatoActivity extends DebugActivity{
     ContatoListAdapter contatoListAdapter;
     List<Contato> contatos;
     ContatoDAO dao;
+    ListView listView;
 
 
     @Override
@@ -35,9 +38,36 @@ public class ContatoActivity extends DebugActivity{
         dao = new ContatoDAO(this);
         contatos = dao.listar();
 
-        ListView listView = (ListView)findViewById(R.id.lst_Contato);
+        listView = (ListView)findViewById(R.id.lst_Contato);
         contatoListAdapter = new ContatoListAdapter(this,R.layout.list_contato_item,contatos);
         listView.setAdapter(contatoListAdapter);
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, final long id) {
+                final int pos = position;
+                AlertDialog.Builder builder = new AlertDialog.Builder(ContatoActivity.this);
+                builder.setTitle("Excluir contato");
+                builder.setMessage("Excluir o contato selecionado");
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dao.deletarContato(String.valueOf(contatos.get(pos).getId()));
+                        atualizaLista();
+                        return;
+                    }
+                });
+                builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                return true;
+            }
+        });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -59,23 +89,6 @@ public class ContatoActivity extends DebugActivity{
         startActivityForResult(it, 1);
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0,0,0,"Excluir");
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case 0:
-                ContextMenu.ContextMenuInfo info = item.getMenuInfo();
-                int pos = ((AdapterView.AdapterContextMenuInfo)info).position;
-                dao.deletarContato(String.valueOf(contatos.get(pos).getId()));
-                atualizaLista();
-        }
-        return true;
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -88,5 +101,7 @@ public class ContatoActivity extends DebugActivity{
         contatos.addAll(c);
         contatoListAdapter.notifyDataSetChanged();
     }
+
+
 
 }
