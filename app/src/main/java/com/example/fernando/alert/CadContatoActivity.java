@@ -50,9 +50,16 @@ public class CadContatoActivity extends DebugActivity {
                     return;
                 }else {
                     try {
-                        salvarContato();
-                        Log.e(TAG, "Contato "+edtNomeContato.getText().toString()+" salvo com sucesso");
-                        finish();
+                        if(edtCodContato.getText().toString().equals("")){
+                            salvarContato();
+                            Log.e(TAG, "Contato "+edtNomeContato.getText().toString()+" salvo com sucesso");
+                            finish();
+                        }else{
+                            alterarContato();
+                            Log.e(TAG, "Contato "+edtNomeContato.getText().toString()+" alterado com sucesso");
+                        }
+
+
                     }catch (Exception ex){
                         Log.e(TAG,"Erro ao salvar contato ");
                     }
@@ -77,5 +84,14 @@ public class CadContatoActivity extends DebugActivity {
         contato = dao.buscar(edtCodContato.getText().toString());
         edtNomeContato.setText(contato.getNome());
         edtTelefoneContato.setText(contato.getTelefone());
+    }
+
+    public void alterarContato(){
+        Contato contato = new Contato();
+        contato.setId(new Long(edtCodContato.getText().toString()));
+        contato.setNome(edtNomeContato.getText().toString());
+        contato.setTelefone(edtTelefoneContato.getText().toString());
+        dao.alterarContato(contato);
+        finish();
     }
 }

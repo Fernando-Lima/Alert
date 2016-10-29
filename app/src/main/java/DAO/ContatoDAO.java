@@ -54,7 +54,6 @@ public class ContatoDAO {
     public void alterarContato(Contato contato){
         ContentValues values = new ContentValues();
         values.put("nome",contato.getNome());
-        values.put("codPais",contato.getcodPais());
         values.put("telefone", contato.getTelefone());
 
         String[] args = new String[]{String.valueOf(contato.getId())};
