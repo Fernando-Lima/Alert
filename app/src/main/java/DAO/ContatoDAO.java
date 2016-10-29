@@ -33,7 +33,7 @@ public class ContatoDAO {
         Log.e("banco","contatoDAO inseriu contato");
     }
     public Contato buscar(String id){
-        String[] colunas = new String[]{"_id","nome","codPais","telefone"};
+        String[] colunas = new String[]{"_id","nome","telefone"};
         String[] args = new String[]{id};
 
         Cursor c = dbContato.query("tbl_contato",colunas,"_id = ?",args,null,null,null);
@@ -44,7 +44,6 @@ public class ContatoDAO {
         contato.setId(c.getLong(c.getColumnIndex("_id")));
         contato.setNome(c.getString(c.getColumnIndex("nome")));
         contato.setTelefone(c.getString(c.getColumnIndex("telefone")));
-        contato.setcodPais(c.getString(c.getColumnIndex("codPais")));
         return contato;
     }
     public void deletarContato(String id){

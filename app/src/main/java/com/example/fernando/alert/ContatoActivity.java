@@ -22,7 +22,7 @@ import DAO.ContatoDAO;
 import adapter.ContatoListAdapter;
 import model.Contato;
 
-public class ContatoActivity extends DebugActivity{
+public class ContatoActivity extends DebugActivity implements AdapterView.OnItemClickListener{
 
     ContatoListAdapter contatoListAdapter;
     List<Contato> contatos;
@@ -46,9 +46,9 @@ public class ContatoActivity extends DebugActivity{
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, final long id) {
                 final int pos = position;
+                Contato contato = new Contato();
                 AlertDialog.Builder builder = new AlertDialog.Builder(ContatoActivity.this);
                 builder.setTitle("Excluir contato");
-                builder.setMessage("Excluir o contato selecionado");
                 builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -69,6 +69,8 @@ public class ContatoActivity extends DebugActivity{
             }
         });
 
+        listView.setOnItemClickListener(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -80,7 +82,6 @@ public class ContatoActivity extends DebugActivity{
                 abrirContato();
             }
         });
-
     }
 
     public void abrirContato(){
@@ -102,6 +103,14 @@ public class ContatoActivity extends DebugActivity{
         contatoListAdapter.notifyDataSetChanged();
     }
 
-
-
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        List<Contato> c = dao.listar();
+        Contato contato = contatos.get(position);
+        String codigo = String.valueOf(contato.getId());
+        Intent it = new Intent(this,CadContatoActivity.class);
+        it.putExtra("id",codigo);
+        startActivityForResult(it,1);
+        Toast.makeText(getApplicationContext(),"codigo "+contato.getNome() + " "+ contato.getId(),Toast.LENGTH_LONG).show();
+    }
 }

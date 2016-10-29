@@ -1,5 +1,6 @@
 package com.example.fernando.alert;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
@@ -13,7 +14,7 @@ import model.Contato;
 
 public class CadContatoActivity extends DebugActivity {
 
-    EditText edtNomeContato, edtCodigoContato, edtTelefoneContato, edtCodPais;
+    EditText edtNomeContato, edtTelefoneContato, edtCodPais, edtCodContato;
 
     private static final String TAG = "banco";
 
@@ -26,12 +27,19 @@ public class CadContatoActivity extends DebugActivity {
 
         dao = new ContatoDAO(this);
 
+        edtCodContato = (EditText)findViewById(R.id.cadContato_edt_codigo);
         edtNomeContato = (EditText)findViewById(R.id.cadContato_edt_nome);
         edtCodPais = (EditText)findViewById(R.id.cadContato_edt_pais);
         edtTelefoneContato = (EditText)findViewById(R.id.cadContato_edt_phone);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Intent it = getIntent();
+        if(!it.getStringExtra("id").equals("")){
+            edtCodContato.setText(it.getStringExtra("id"));
+            buscarContato();
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -61,5 +69,13 @@ public class CadContatoActivity extends DebugActivity {
         contato.setLongitude(0.0);
 
         dao.salvar(contato);
+    }
+
+    public void buscarContato(){
+        Contato contato = new Contato();
+
+        contato = dao.buscar(edtCodContato.getText().toString());
+        edtNomeContato.setText(contato.getNome());
+        edtTelefoneContato.setText(contato.getTelefone());
     }
 }
