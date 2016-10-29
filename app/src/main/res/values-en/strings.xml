@@ -17,5 +17,6 @@
     <string name="hellow_tv_nome">Digite seu nome:</string>
     <string name="hellow_tv_numero">Digite seu número de telefone</string>
     <string name="hellow_btn_salvar">Salvar</string>
+    <string name="cadContato_tv_principal">Adicionar contato como principal</string>
 
 </resources>
