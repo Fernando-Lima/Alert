@@ -78,7 +78,13 @@ public class CadContatoActivity extends DebugActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                   principal = 1;
+                    if (dao.checarContatoPrincipal()==true){
+                        Toast.makeText(CadContatoActivity.this,"Já existe um contato como Principal",Toast.LENGTH_LONG).show();
+                        controleSwitch.setChecked(false);
+                        principal = 0;
+                    }else {
+                        principal = 1;
+                    }
                 }else{
                     principal = 0;
                 }
@@ -94,7 +100,7 @@ public class CadContatoActivity extends DebugActivity {
         contato.setLongitude(0.0);
         contato.setPrincipal(principal);
         dao.salvar(contato);
-        dao.checarContatoPrincipal();
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
