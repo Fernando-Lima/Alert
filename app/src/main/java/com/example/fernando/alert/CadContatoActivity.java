@@ -105,6 +105,7 @@ public class CadContatoActivity extends DebugActivity {
         edtTelefoneContato.setText(contato.getTelefone());
         if (contato.getPrincipal() == 1){
             controleSwitch.setChecked(true);
+            principal = 1;
         }
     }
 
