@@ -103,15 +103,39 @@ public class ContatoDAO {
         return checked;
     }
 
+    public boolean checarContatoPrincipal(){
+        Cursor cur = dbContato.rawQuery("SELECT COUNT(*) FROM tbl_contato WHERE principal = 1", null);
+        if (cur != null) {
+            cur.moveToFirst();
+            if (cur.getInt (0) == 0) {
+                //nenhum contato principal
+                checked = false;
+            } else {
+                //contem contato principal
+                checked = true;
+            }
+        }
+        return checked;
+    }
+
+
     //Query para buscar contato principal
     public Contato buscarPrincipal(){
-        Cursor c = dbContato.rawQuery("SELECT * FROM tbl_contato WHERE principal = 1",null);
+        String[] colunas = new String[]{"_id","nome","telefone","latitude","longitude","principal"};
+        Cursor c = dbContato.query("tbl_contato",colunas,"principal = 1",null,null,null,null);
         Contato contato = new Contato();
-        contato.setNome(c.getString(c.getColumnIndex("nome")));
-        contato.setTelefone(c.getString(c.getColumnIndex("telefone")));
-        contato.setLatitude(c.getDouble(c.getColumnIndex("latitude")));
-        contato.setLongitude(c.getDouble(c.getColumnIndex("longitude")));
-        contato.setPrincipal(c.getInt(c.getColumnIndex("principal")));
+        contato.setNome("");
+
+        if(c.moveToFirst()){
+            do {
+                contato.setNome(c.getString(c.getColumnIndex("nome")));
+                contato.setTelefone(c.getString(c.getColumnIndex("telefone")));
+                contato.setLatitude(c.getDouble(c.getColumnIndex("latitude")));
+                contato.setLongitude(c.getDouble(c.getColumnIndex("longitude")));
+                contato.setPrincipal(c.getInt(c.getColumnIndex("principal")));
+            }while (c.moveToNext());
+        }
+        c.close();
         return contato;
     }
 

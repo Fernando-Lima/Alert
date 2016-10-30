@@ -16,18 +16,27 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import DAO.ContatoDAO;
 import DAO.UsuarioDAO;
+import model.Contato;
 
 public class MainActivity extends DebugActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Button btnOk, btnAlerta;
     String message;
+    ContatoDAO dao;
+    String telefone;
+    int contem = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        dao = new ContatoDAO(this);
+        checked();
+        buscarContatoPrincipal();
 
         btnOk = (Button) findViewById(R.id.main_btn_ok);
         btnAlerta = (Button) findViewById(R.id.main_btn_alerta);
@@ -35,7 +44,7 @@ public class MainActivity extends DebugActivity
         btnAlerta.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Uri uri = Uri.parse("tel:99999999");
+                Uri uri = Uri.parse("tel:"+telefone);
                 Intent it = new Intent(Intent.ACTION_DIAL, uri);
                 startActivity(it);
                 return false;
@@ -54,6 +63,12 @@ public class MainActivity extends DebugActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+    }
+
+    @Override
+    protected void onResume() {
+        buscarContatoPrincipal();
+        super.onResume();
     }
 
     @Override
@@ -118,11 +133,28 @@ public class MainActivity extends DebugActivity
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
         try {
             SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage("91291942",null,message, null,null);
+            smsManager.sendTextMessage(telefone,null,message, null,null);
             Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_LONG).show();
         }catch (Exception e){
             Toast.makeText(getApplicationContext(), "SMS faild, please try again.", Toast.LENGTH_LONG).show();
             e.printStackTrace();
+        }
+    }
+
+    public void checked(){
+        if(dao.checarContatoPrincipal() != true){
+            //nenhum usuario principal
+            contem = 1;
+        }
+    }
+
+    public void buscarContatoPrincipal(){
+        Contato contato = new Contato();
+        contato = dao.buscarPrincipal();
+        if(contem == 1){
+            Toast.makeText(this,"nenhum contato como principal",Toast.LENGTH_SHORT).show();
+        }else {
+            telefone = contato.getTelefone().toString();
         }
     }
 }
