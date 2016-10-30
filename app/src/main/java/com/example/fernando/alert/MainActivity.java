@@ -34,6 +34,7 @@ public class MainActivity extends DebugActivity
         setContentView(R.layout.activity_main);
 
         dao = new ContatoDAO(this);
+        checked();
 
         btnOk = (Button) findViewById(R.id.main_btn_ok);
         btnAlerta = (Button) findViewById(R.id.main_btn_alerta);
@@ -41,9 +42,13 @@ public class MainActivity extends DebugActivity
         btnAlerta.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Uri uri = Uri.parse("tel:"+telefone);
-                Intent it = new Intent(Intent.ACTION_DIAL, uri);
-                startActivity(it);
+                if (checked() == false) {
+                    Toast.makeText(MainActivity.this,"nenhum contato como principal",Toast.LENGTH_SHORT).show();
+                }else{
+                    Uri uri = Uri.parse("tel:"+telefone);
+                    Intent it = new Intent(Intent.ACTION_DIAL, uri);
+                    startActivity(it);
+                }
                 return false;
             }
         });
@@ -65,7 +70,6 @@ public class MainActivity extends DebugActivity
     @Override
     protected void onResume() {
         checked();
-        buscarContatoPrincipal();
         super.onResume();
     }
 
@@ -105,7 +109,6 @@ public class MainActivity extends DebugActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_contato) {
@@ -127,34 +130,32 @@ public class MainActivity extends DebugActivity
         return true;
     }
     public void enviarMensagem(View v){
-        message = "ALERTA - Preciso de Ajuda ";
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-        try {
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(telefone,null,message, null,null);
-            Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_LONG).show();
-        }catch (Exception e){
-            Toast.makeText(getApplicationContext(), "SMS faild, please try again.", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
+        if (checked() == false) {
+            Toast.makeText(MainActivity.this,"nenhum contato como principal para enviar SMS",Toast.LENGTH_SHORT).show();
+        }else{
+            message = "ALERTA - Preciso de Ajuda ";
+            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            try {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(telefone,null,message, null,null);
+                Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_LONG).show();
+            }catch (Exception e){
+                Toast.makeText(getApplicationContext(), "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
         }
     }
 
     public boolean checked(){
-        if(dao.checarContatoPrincipal() != true){
-            //nenhum contato principal
-            return false;
-        }else {
-            return true;
-        }
-    }
-
-    public void buscarContatoPrincipal(){
         Contato contato = new Contato();
         contato = dao.buscarPrincipal();
-        if(checked()== false){
+        if(dao.checarContatoPrincipal() != true){
+            //nenhum contato principal
             Toast.makeText(this,"nenhum contato como principal",Toast.LENGTH_SHORT).show();
+            return false;
         }else {
             telefone = contato.getTelefone().toString();
+            return true;
         }
     }
 }
