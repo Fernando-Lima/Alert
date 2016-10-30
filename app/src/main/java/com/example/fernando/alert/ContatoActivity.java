@@ -1,21 +1,15 @@
 package com.example.fernando.alert;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.ContextMenu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import DAO.ContatoDAO;
@@ -111,6 +105,6 @@ public class ContatoActivity extends DebugActivity implements AdapterView.OnItem
         Intent it = new Intent(this,CadContatoActivity.class);
         it.putExtra("id",codigo);
         startActivityForResult(it,1);
-        Toast.makeText(getApplicationContext(),"codigo "+contato.getNome() + " "+ contato.getId(),Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),"codigo "+contato.getNome() + " "+ contato.getId(),Toast.LENGTH_LONG).show();
     }
 }

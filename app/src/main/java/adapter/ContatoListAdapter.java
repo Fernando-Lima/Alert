@@ -41,10 +41,16 @@ public class ContatoListAdapter extends ArrayAdapter<Contato> {
 
         TextView tvNome = (TextView)view.findViewById(R.id.list_item_contato_tv_nome);
         TextView tvTelefone = (TextView) view.findViewById(R.id.lint_item_contato_tv_telefone);
+        TextView tvPrincipal = (TextView)view.findViewById(R.id.list_item_contato_tv_principal);
 
         Contato contato = contatos.get(position);
         tvNome.setText(contato.getNome());
         tvTelefone.setText(contato.getTelefone());
+        if (contato.getPrincipal() == 1){
+            tvPrincipal.setText("Principal");
+        }else {
+            tvPrincipal.setText("");
+        }
 
         return view;
     }

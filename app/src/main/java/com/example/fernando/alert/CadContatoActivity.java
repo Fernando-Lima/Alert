@@ -20,6 +20,7 @@ public class CadContatoActivity extends DebugActivity {
 
     EditText edtNomeContato, edtTelefoneContato, edtCodPais, edtCodContato;
     Switch controleSwitch;
+    int principal;
 
     private static final String TAG = "banco";
 
@@ -77,9 +78,9 @@ public class CadContatoActivity extends DebugActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    //ação de botão ligado
+                   principal = 1;
                 }else{
-                    //ação de botão desligado
+                    principal = 0;
                 }
             }
         });
@@ -91,14 +92,19 @@ public class CadContatoActivity extends DebugActivity {
         contato.setTelefone(edtTelefoneContato.getText().toString());
         contato.setLatitude(0.0);
         contato.setLongitude(0.0);
+        contato.setPrincipal(principal);
         dao.salvar(contato);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public void buscarContato(){
         Contato contato = new Contato();
         contato = dao.buscar(edtCodContato.getText().toString());
         edtNomeContato.setText(contato.getNome());
         edtTelefoneContato.setText(contato.getTelefone());
+        if (contato.getPrincipal() == 1){
+            controleSwitch.setChecked(true);
+        }
     }
 
     public void alterarContato(){
@@ -106,18 +112,18 @@ public class CadContatoActivity extends DebugActivity {
         contato.setId(new Long(edtCodContato.getText().toString()));
         contato.setNome(edtNomeContato.getText().toString());
         contato.setTelefone(edtTelefoneContato.getText().toString());
+        contato.setPrincipal(principal);
         dao.alterarContato(contato);
         finish();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public void checked(){
-        if(dao.checarTabela() == true){
-            //Contém dados na tabela tbl_contato
-           controleSwitch.setChecked(false);
-        }else {
+
+        if(dao.checarTabela() != true){
             //tbl_contato vazia
             controleSwitch.setChecked(true);
+            principal = 1;
         }
     }
 }
