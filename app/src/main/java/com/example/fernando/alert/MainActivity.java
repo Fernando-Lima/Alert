@@ -27,7 +27,6 @@ public class MainActivity extends DebugActivity
     String message;
     ContatoDAO dao;
     String telefone;
-    int contem = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +34,6 @@ public class MainActivity extends DebugActivity
         setContentView(R.layout.activity_main);
 
         dao = new ContatoDAO(this);
-        checked();
-        buscarContatoPrincipal();
 
         btnOk = (Button) findViewById(R.id.main_btn_ok);
         btnAlerta = (Button) findViewById(R.id.main_btn_alerta);
@@ -67,6 +64,7 @@ public class MainActivity extends DebugActivity
 
     @Override
     protected void onResume() {
+        checked();
         buscarContatoPrincipal();
         super.onResume();
     }
@@ -141,17 +139,19 @@ public class MainActivity extends DebugActivity
         }
     }
 
-    public void checked(){
+    public boolean checked(){
         if(dao.checarContatoPrincipal() != true){
-            //nenhum usuario principal
-            contem = 1;
+            //nenhum contato principal
+            return false;
+        }else {
+            return true;
         }
     }
 
     public void buscarContatoPrincipal(){
         Contato contato = new Contato();
         contato = dao.buscarPrincipal();
-        if(contem == 1){
+        if(checked()== false){
             Toast.makeText(this,"nenhum contato como principal",Toast.LENGTH_SHORT).show();
         }else {
             telefone = contato.getTelefone().toString();

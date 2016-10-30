@@ -94,6 +94,7 @@ public class CadContatoActivity extends DebugActivity {
         contato.setLongitude(0.0);
         contato.setPrincipal(principal);
         dao.salvar(contato);
+        dao.checarContatoPrincipal();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
