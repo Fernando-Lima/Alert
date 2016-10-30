@@ -46,7 +46,7 @@ public class ContatoDAO {
         contato.setId(c.getLong(c.getColumnIndex("_id")));
         contato.setNome(c.getString(c.getColumnIndex("nome")));
         contato.setTelefone(c.getString(c.getColumnIndex("telefone")));
-        contato.setPrincipal(c.getColumnIndex("principal"));
+        contato.setPrincipal(c.getInt(c.getColumnIndex("principal")));
         return contato;
     }
     public void deletarContato(String id){
@@ -80,7 +80,7 @@ public class ContatoDAO {
                 contato.setTelefone(c.getString(c.getColumnIndex("telefone")));
                 contato.setLatitude(c.getDouble(c.getColumnIndex("latitude")));
                 contato.setLongitude(c.getDouble(c.getColumnIndex("longitude")));
-                contato.setPrincipal(c.getColumnIndex("principal"));
+                contato.setPrincipal(c.getInt(c.getColumnIndex("principal")));
                 contatos.add(contato);
             }while (c.moveToNext());
         }
@@ -101,6 +101,18 @@ public class ContatoDAO {
             }
         }
         return checked;
+    }
+
+    //Query para buscar contato principal
+    public Contato buscarPrincipal(){
+        Cursor c = dbContato.rawQuery("SELECT * FROM tbl_contato WHERE principal = 1",null);
+        Contato contato = new Contato();
+        contato.setNome(c.getString(c.getColumnIndex("nome")));
+        contato.setTelefone(c.getString(c.getColumnIndex("telefone")));
+        contato.setLatitude(c.getDouble(c.getColumnIndex("latitude")));
+        contato.setLongitude(c.getDouble(c.getColumnIndex("longitude")));
+        contato.setPrincipal(c.getInt(c.getColumnIndex("principal")));
+        return contato;
     }
 
 }
