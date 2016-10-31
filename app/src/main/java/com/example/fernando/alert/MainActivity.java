@@ -127,6 +127,11 @@ public class MainActivity extends DebugActivity
             }
         }
     }
+    public void ligacao(View v){
+        Uri uri = Uri.parse("tel:190");
+        Intent it = new Intent(Intent.ACTION_DIAL, uri);
+        startActivity(it);
+    }
 
     public boolean checked(){
         Contato contato = new Contato();

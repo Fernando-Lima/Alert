@@ -18,4 +18,7 @@
     <string name="hellow_tv_numero">Digite seu número de telefone</string>
     <string name="hellow_btn_salvar">Salvar</string>
     <string name="cadContato_tv_principal">Adicionar contato como principal</string>
+    <string name="mainTv_ok">Precione se estiver Ok.</string>
+    <string name="mainTv_alerta">Precione para mensagem. Segure para ligação</string>
+    <string name="mainTv_policia">Precione para ligar para polícia</string>
 </resources>
