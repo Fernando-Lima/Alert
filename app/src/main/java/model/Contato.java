@@ -10,6 +10,7 @@ public class Contato {
     Double latitude;
     Double longitude;
     int principal;
+    int local;
 
 
     public Long getId() {return id;}
@@ -45,5 +46,9 @@ public class Contato {
     public int getPrincipal() {return principal;}
 
     public void setPrincipal(int principal) {this.principal = principal;}
+
+    public int getLocal() {return local;}
+
+    public void setLocal(int local) {this.local = local;}
 
 }

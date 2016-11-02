@@ -11,13 +11,13 @@ public class BancoDados {
 	// Nome do banco
 	private static final String NOME_BANCO = " Alerta ";
 	// Controle de versao
-	private static final int VERSAO_BANCO = 8;
+	private static final int VERSAO_BANCO = 9;
 	// Script para fazer drop na tabela
 	private static final String[] SCRIPT_DATABASE_DELETE_USUARIO = new String[]{"DROP TABLE IF EXISTS tbl_usuario;"};
 	private static final String[] SCRIPT_DATABASE_DELETE_CONTATO = new String[]{"DROP TABLE IF EXISTS tbl_contato;"};
 	// Cria a tabela com o "_id" sequencial //Cria um Array do tipo String passando o Scrip do create da tabela
 	private static final String[] SCRIPT_DATABASE_CREATE_USUARIO = new String[] {"create table tbl_usuario(_id integer primary key, nome text, telefone text, latitude double, longitude double);"};
-	private static final String[] SCRIPT_DATABASE_CREATE_CONTATO = new String[] {"create table tbl_contato(_id integer primary key, nome text, telefone text, latitude double, longitude double, principal int);"};
+	private static final String[] SCRIPT_DATABASE_CREATE_CONTATO = new String[] {"create table tbl_contato(_id integer primary key, nome text, telefone text, latitude double, longitude double, principal int, local int);"};
 
 	private static SQLiteDatabase dbContato;
 	private static SQLiteDatabase dbUsuario;

@@ -21,5 +21,7 @@
     <string name="mainTv_ok">Precione se estiver Ok.</string>
     <string name="mainTv_alerta">Precione para mensagem. Segure para ligação</string>
     <string name="mainTv_policia">Precione para ligar para polícia</string>
+    <string name="cad_contato_tv_local">Enviar minha localização</string>
+    <string name="cad_Contato_tv_local">Enviar minha localização</string>
 
 </resources>

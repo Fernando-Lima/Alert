@@ -31,11 +31,12 @@ public class ContatoDAO {
         values.put("latitude", contato.getLatitude());
         values.put("longitude",contato.getLongitude());
         values.put("principal",contato.getPrincipal());
+        values.put("local",contato.getLocal());
         dbContato.insert("tbl_contato", null, values);
         Log.e("banco","contatoDAO inseriu contato");
     }
     public Contato buscar(String id){
-        String[] colunas = new String[]{"_id","nome","telefone","principal"};
+        String[] colunas = new String[]{"_id","nome","telefone","principal","local"};
         String[] args = new String[]{id};
 
         Cursor c = dbContato.query("tbl_contato",colunas,"_id = ?",args,null,null,null);
@@ -47,6 +48,7 @@ public class ContatoDAO {
         contato.setNome(c.getString(c.getColumnIndex("nome")));
         contato.setTelefone(c.getString(c.getColumnIndex("telefone")));
         contato.setPrincipal(c.getInt(c.getColumnIndex("principal")));
+        contato.setLocal(c.getInt(c.getColumnIndex("local")));
         return contato;
     }
     public void deletarContato(String id){
@@ -59,6 +61,7 @@ public class ContatoDAO {
         values.put("nome",contato.getNome());
         values.put("telefone", contato.getTelefone());
         values.put("principal",contato.getPrincipal());
+        values.put("local",contato.getLocal());
 
         String[] args = new String[]{String.valueOf(contato.getId())};
 
@@ -66,7 +69,7 @@ public class ContatoDAO {
 
     }
     public List<Contato> listar(){
-        String[] colunas = new String[]{"_id","nome","telefone","latitude","longitude","principal"};
+        String[] colunas = new String[]{"_id","nome","telefone","latitude","longitude","principal","local"};
         List<Contato> contatos;
         Cursor c = dbContato.query("tbl_contato",colunas,null,null,null,null,null,null);
 
@@ -81,6 +84,7 @@ public class ContatoDAO {
                 contato.setLatitude(c.getDouble(c.getColumnIndex("latitude")));
                 contato.setLongitude(c.getDouble(c.getColumnIndex("longitude")));
                 contato.setPrincipal(c.getInt(c.getColumnIndex("principal")));
+                contato.setLocal(c.getInt(c.getColumnIndex("local")));
                 contatos.add(contato);
             }while (c.moveToNext());
         }

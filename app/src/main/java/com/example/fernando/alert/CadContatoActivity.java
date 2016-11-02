@@ -19,8 +19,9 @@ import model.Contato;
 public class CadContatoActivity extends DebugActivity {
 
     EditText edtNomeContato, edtTelefoneContato, edtCodPais, edtCodContato;
-    Switch controleSwitch;
+    Switch controleSwitch, controleSwitchLocal;
     int principal;
+    int local;
 
     private static final String TAG = "banco";
 
@@ -38,6 +39,8 @@ public class CadContatoActivity extends DebugActivity {
         edtCodPais = (EditText)findViewById(R.id.cadContato_edt_pais);
         edtTelefoneContato = (EditText)findViewById(R.id.cadContato_edt_phone);
         controleSwitch = (Switch)findViewById(R.id.cadContato_sw_principal);
+        controleSwitchLocal = (Switch)findViewById(R.id.cadContato_sw_localizacao);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -90,6 +93,17 @@ public class CadContatoActivity extends DebugActivity {
                 }
             }
         });
+
+        controleSwitchLocal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    local = 1;
+                }else {
+                    local = 0;
+                }
+            }
+        });
     }
 
     public void salvarContato(){
@@ -99,6 +113,7 @@ public class CadContatoActivity extends DebugActivity {
         contato.setLatitude(0.0);
         contato.setLongitude(0.0);
         contato.setPrincipal(principal);
+        contato.setLocal(local);
         dao.salvar(contato);
 
     }
@@ -113,6 +128,10 @@ public class CadContatoActivity extends DebugActivity {
             controleSwitch.setChecked(true);
             principal = 1;
         }
+        if (contato.getLocal() == 1){
+            controleSwitchLocal.setChecked(true);
+            local = 1;
+        }
     }
 
     public void alterarContato(){
@@ -121,6 +140,7 @@ public class CadContatoActivity extends DebugActivity {
         contato.setNome(edtNomeContato.getText().toString());
         contato.setTelefone(edtTelefoneContato.getText().toString());
         contato.setPrincipal(principal);
+        contato.setLocal(local);
         dao.alterarContato(contato);
         finish();
     }
@@ -132,6 +152,8 @@ public class CadContatoActivity extends DebugActivity {
             //tbl_contato vazia
             controleSwitch.setChecked(true);
             principal = 1;
+            controleSwitchLocal.setChecked(true);
+            local = 1;
         }
     }
 }
