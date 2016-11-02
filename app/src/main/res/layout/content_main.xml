@@ -22,7 +22,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="22dp"
         android:id="@+id/main_btn_policia"
-        android:onClick="ligacao"/>
+        android:onClick="ligacao"
+        android:background="@android:color/holo_red_dark"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse" />
 
     <Button
         android:text="@string/main_btn_alert"
@@ -32,7 +34,9 @@
         android:layout_marginBottom="117dp"
         android:onClick="enviarMensagem"
         android:layout_above="@+id/main_btn_policia"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/holo_orange_dark"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse" />
 
     <Button
         android:text="@string/main_btn_ok"
@@ -43,25 +47,21 @@
         android:layout_marginTop="69dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="@string/mainTv_ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
-        android:id="@+id/textView3" />
+        android:layout_alignParentStart="true"
+        android:background="@color/green"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#262626"
         android:layout_above="@+id/main_btn_alerta"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="22dp"
         android:id="@+id/textView5"
-        android:text="@string/mainTv_alerta" />
+        android:text="@string/mainTv_alerta"
+        android:textSize="18sp"
+        android:textAlignment="center" />
 
     <TextView
         android:text="@string/mainTv_policia"
@@ -71,5 +71,17 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"
         android:id="@+id/textView6" />
+
+    <TextView
+        android:text="@string/mainTv_ok"
+        android:textColor="#262626"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:id="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:textAlignment="center" />
 
 </RelativeLayout>
