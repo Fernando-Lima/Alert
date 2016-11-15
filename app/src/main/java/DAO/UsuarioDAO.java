@@ -20,7 +20,7 @@ public class UsuarioDAO {
     SQLiteDatabase dbUsuario;// representa a conexão com o banco
 
     public UsuarioDAO(Context context){
-        dbUsuario= BancoDados.getDbUsuario(context);
+        dbUsuario= BancoDados.getDbUsuario(context); //Cria o banco
     }
 
     public void  salvar(Usuario usuario) {
@@ -30,7 +30,6 @@ public class UsuarioDAO {
         values.put("latitude",usuario.getLatitude());
         values.put("longitude",usuario.getLongitude());
         dbUsuario.insert("tbl_usuario", null, values);
-        Log.e("banco","usuarioDAO inseriu usuario");
     }
 
     public Usuario buscarUsuario(String id){

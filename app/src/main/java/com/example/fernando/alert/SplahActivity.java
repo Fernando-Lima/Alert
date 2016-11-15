@@ -8,6 +8,7 @@ import android.Manifest;
 import android.widget.Toast;
 
 
+import DAO.UsuarioDAO;
 import utils.PermissionUtils;
 
 public class SplahActivity extends AppCompatActivity {

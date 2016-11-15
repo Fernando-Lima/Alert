@@ -2,7 +2,9 @@ package com.example.fernando.alert;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
+import DAO.LocalDAO;
 import DAO.UsuarioDAO;
 import model.Usuario;
 
@@ -19,13 +22,13 @@ import model.Usuario;
 public class HellowActivity extends AppCompatActivity {
 
     EditText edtNome, edtTelefone;
-    TextView tvNome;
     private Double latitude;
     private Double longitude;
     private AlertDialog alertDialog;
     private static final String TAG = "error";
 
     UsuarioDAO dao;
+    LocalDAO localDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +36,15 @@ public class HellowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hellow);
 
         dao = new UsuarioDAO(this);
+        localDAO = new LocalDAO();
 
         edtNome = (EditText)findViewById(R.id.hellow_edt_nome);
         edtTelefone = (EditText)findViewById(R.id.hellow_edt_numero);
+
+        if(Build.VERSION.SDK_INT>9){
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,7 +61,22 @@ public class HellowActivity extends AppCompatActivity {
                     Log.i("error","telefone usuario em branco");
                     return;
                 }else {
-                    salvarUsuario();
+
+                    try {
+                        salvarUsuario();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        Log.e("banco", "Erro " +e);
+                    }
+
+                    try {
+                        inserirWS();
+                        Log.i("ws","inserido com sucesso!");
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        Log.i("ws","Erro ao inserir " + e);
+                    }
+
                     startActivity(new Intent(HellowActivity.this, MainActivity.class));
                     finish();
                 }
@@ -66,6 +90,14 @@ public class HellowActivity extends AppCompatActivity {
         usuario.setLatitude(0.0);
         usuario.setLongitude(0.0);
         dao.salvar(usuario);
+    }
+
+    public void inserirWS(){
+        Usuario usuario = new Usuario();
+        usuario.setNome(edtNome.getText().toString());
+        usuario.setTelefone(edtTelefone.getText().toString());
+        usuario.setId(1L);
+        localDAO.inserir(usuario);
     }
 
 }

@@ -38,4 +38,5 @@ public class Usuario {
     public Double getLongitude() {return longitude;}
 
     public void setLongitude(Double longitude) {this.longitude = longitude;}
+
 }

@@ -2,8 +2,11 @@ package com.example.fernando.alert;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,8 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import DAO.ContatoDAO;
+import DAO.LocalDAO;
 import DAO.UsuarioDAO;
 import model.Contato;
+import model.Usuario;
 
 public class MainActivity extends DebugActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -26,6 +31,7 @@ public class MainActivity extends DebugActivity
     Button btnOk, btnAlerta;
     String message;
     ContatoDAO dao;
+    UsuarioDAO usuarioDAO;
     String telefone;
 
     @Override
@@ -34,6 +40,7 @@ public class MainActivity extends DebugActivity
         setContentView(R.layout.activity_main);
 
         dao = new ContatoDAO(this);
+        usuarioDAO = new UsuarioDAO(this);
         checked();
 
         btnOk = (Button) findViewById(R.id.main_btn_ok);
@@ -64,6 +71,7 @@ public class MainActivity extends DebugActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
 
     }
 
@@ -107,6 +115,7 @@ public class MainActivity extends DebugActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     public void enviarMensagem(View v){
         if (checked() == false) {
             Toast.makeText(MainActivity.this,"nenhum contato como principal para enviar SMS",Toast.LENGTH_SHORT).show();
@@ -127,6 +136,7 @@ public class MainActivity extends DebugActivity
             }
         }
     }
+
     public void ligacao(View v){
         Uri uri = Uri.parse("tel:190");
         Intent it = new Intent(Intent.ACTION_DIAL, uri);
@@ -145,4 +155,5 @@ public class MainActivity extends DebugActivity
             return true;
         }
     }
+
 }

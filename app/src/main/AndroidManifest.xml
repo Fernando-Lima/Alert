@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Permissão para localização GPS -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Permissão para triangulação de torre celular -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- Permissão para ler contatos da agenda do celular -->
     <!-- Permissão para utilização de estado da rede -->
