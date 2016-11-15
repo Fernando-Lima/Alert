@@ -16,7 +16,7 @@ import model.Contato;
  * Created by fernando on 23/09/15.
  */
 public class ContatoDAO {
-    Boolean checked;
+    Boolean checked, checkedLocal;
 
     SQLiteDatabase dbContato;// representa a conexão com o banco
 
@@ -141,6 +141,21 @@ public class ContatoDAO {
         }
         c.close();
         return contato;
+    }
+
+    public boolean checarLocalContato(){
+        Cursor cur = dbContato.rawQuery("SELECT COUNT(*) FROM tbl_contato WHERE local = 1", null);
+        if (cur != null) {
+            cur.moveToFirst();
+            if (cur.getInt (0) == 0) {
+                //nenhum contato principal
+                checkedLocal = false;
+            } else {
+                //contem contato principal
+                checkedLocal = true;
+            }
+        }
+        return checkedLocal;
     }
 
 }

@@ -42,6 +42,7 @@ public class MainActivity extends DebugActivity
         dao = new ContatoDAO(this);
         usuarioDAO = new UsuarioDAO(this);
         checked();
+        checkedLocal();
 
         btnOk = (Button) findViewById(R.id.main_btn_ok);
         btnAlerta = (Button) findViewById(R.id.main_btn_alerta);
@@ -78,6 +79,7 @@ public class MainActivity extends DebugActivity
     @Override
     protected void onResume() {
         checked();
+        checkedLocal();
         super.onResume();
     }
 
@@ -129,9 +131,9 @@ public class MainActivity extends DebugActivity
             try {
                 SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage(telefone,null,message, null,null);
-                Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "SMS enviado.", Toast.LENGTH_LONG).show();
             }catch (Exception e){
-                Toast.makeText(getApplicationContext(), "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Falha ao enviar sms. Por favor tente novamente.", Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }
         }
@@ -152,6 +154,15 @@ public class MainActivity extends DebugActivity
             return false;
         }else {
             telefone = contato.getTelefone().toString();
+            return true;
+        }
+    }
+
+    public boolean checkedLocal(){
+        if (dao.checarLocalContato()!=true){
+            Toast.makeText(this,"nenhum contato para enviar localização",Toast.LENGTH_SHORT).show();
+            return false;
+        }else {
             return true;
         }
     }
