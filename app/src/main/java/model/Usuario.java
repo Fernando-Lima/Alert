@@ -8,8 +8,9 @@ public class Usuario {
     Long id;
     private String nome;
     private String telefone;
-    private Double latitude;
-    private Double longitude;
+    private String telefoneContato;
+    private String latitude;
+    private String longitude;
 
     public Long getId() {return id;}
 
@@ -31,12 +32,27 @@ public class Usuario {
         this.telefone = telefone;
     }
 
-    public Double getLatitude() {return latitude;}
+    public String getTelefoneContato() {return telefoneContato;}
 
-    public void setLatitude(Double latitude) {this.latitude = latitude;}
+    public void setTelefoneContato(String telefoneContato) {this.telefoneContato = telefoneContato;}
 
-    public Double getLongitude() {return longitude;}
+    public String getLatitude() {return latitude;}
 
-    public void setLongitude(Double longitude) {this.longitude = longitude;}
+    public void setLatitude(String latitude) {this.latitude = latitude;}
+
+    public String getLongitude() {return longitude;}
+
+    public void setLongitude(String longitude) {this.longitude = longitude;}
+
+    public Usuario(Long id, String nome, String telefone, String latitude, String longitude) {
+        this.id = id;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+    public  Usuario(){
+
+    }
 
 }

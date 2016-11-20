@@ -1,6 +1,10 @@
 package com.example.fernando.alert;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -14,14 +18,18 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import DAO.ContatoDAO;
+import DAO.ContatoWSDAO;
 import model.Contato;
+import model.Usuario;
 
-public class CadContatoActivity extends DebugActivity {
+public class CadContatoActivity extends DebugActivity implements LocationListener{
 
     EditText edtNomeContato, edtTelefoneContato, edtCodPais, edtCodContato;
     Switch controleSwitch, controleSwitchLocal;
     int principal;
     int local;
+    String  latitude, longitude;
+    ContatoWSDAO contatoWSDAO;
 
     private static final String TAG = "banco";
 
@@ -33,6 +41,7 @@ public class CadContatoActivity extends DebugActivity {
         setContentView(R.layout.activity_cad_contato);
 
         dao = new ContatoDAO(this);
+        contatoWSDAO = new ContatoWSDAO();
 
         edtCodContato = (EditText)findViewById(R.id.cadContato_edt_codigo);
         edtNomeContato = (EditText)findViewById(R.id.cadContato_edt_nome);
@@ -106,6 +115,14 @@ public class CadContatoActivity extends DebugActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, this);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,this);
+    }
+
     public void salvarContato(){
         Contato contato = new Contato();
         contato.setNome(edtNomeContato.getText().toString());
@@ -115,6 +132,16 @@ public class CadContatoActivity extends DebugActivity {
         contato.setPrincipal(principal);
         contato.setLocal(local);
         dao.salvar(contato);
+
+        if(controleSwitchLocal.isChecked()){
+            try {
+                inserirContatoWS();
+                Log.i("ws","contato inserido com sucesso");
+            }catch (Exception e){
+                e.printStackTrace();
+                Log.i("ws","falha ao inserir contato");
+            }
+        }
 
     }
 
@@ -142,6 +169,17 @@ public class CadContatoActivity extends DebugActivity {
         contato.setPrincipal(principal);
         contato.setLocal(local);
         dao.alterarContato(contato);
+
+        if(controleSwitchLocal.isChecked()){
+            try {
+                inserirContatoWS();
+                Log.i("ws","contato inserido com sucesso");
+            }catch (Exception e){
+                e.printStackTrace();
+                Log.i("ws","falha ao inserir contato");
+            }
+        }
+
         finish();
     }
 
@@ -155,5 +193,38 @@ public class CadContatoActivity extends DebugActivity {
             controleSwitchLocal.setChecked(true);
             local = 1;
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        latitude = String.valueOf(location.getLatitude()).toString();
+        longitude = String.valueOf(location.getLongitude()).toString();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+    public void inserirContatoWS(){
+        Usuario usuario = new Usuario();
+
+        usuario.setId(1L);
+        usuario.setNome(HellowActivity.NOME);
+        usuario.setTelefone(HellowActivity.TELEFONE);
+        usuario.setTelefoneContato(edtTelefoneContato.getText().toString());
+        usuario.setLatitude( latitude);
+        usuario.setLongitude(longitude);
+        Toast.makeText(this,"Latitude: " + latitude +"Longitude: "+ longitude,Toast.LENGTH_SHORT).show();
+        contatoWSDAO.inserir(usuario);
     }
 }

@@ -17,7 +17,7 @@ import model.Usuario;
  * Created by fernando on 11/11/16.
  */
 
-public class LocalDAO {
+public class UsuarioWSDAO {
     private static final String URL = "http://192.168.2.104:8080/AlertaTCC/services/UsuarioDAO?wsdl";
     private static final String NAMESPACE = "http://DAO";
     private static final String INSERIR = "inserir";
@@ -55,7 +55,9 @@ public class LocalDAO {
         }
 
         public boolean atualizar(Usuario usuario){
-        return true;
+
+
+            return true;
         }
 
         public boolean excluir(Usuario usuario){

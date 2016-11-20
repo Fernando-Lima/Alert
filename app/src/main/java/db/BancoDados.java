@@ -17,7 +17,7 @@ public class BancoDados {
 	private static final String[] SCRIPT_DATABASE_DELETE_USUARIO = new String[]{"DROP TABLE IF EXISTS"+ NOME_BANCO_USUARIO};
 	private static final String[] SCRIPT_DATABASE_DELETE_CONTATO = new String[]{"DROP TABLE IF EXISTS" + NOME_BANCO_CONTATO};
 	// Cria a tabela com o "_id" sequencial //Cria um Array do tipo String passando o Scrip do create da tabela
-	private static final String[] SCRIPT_DATABASE_CREATE_USUARIO = new String[] {"create table "+NOME_BANCO_USUARIO+"(_id integer primary key, nome text, telefone text, latitude double, longitude double);"};
+	private static final String[] SCRIPT_DATABASE_CREATE_USUARIO = new String[] {"create table "+NOME_BANCO_USUARIO+"(_id integer primary key, nome text, telefone text, latitude text, longitude text);"};
 	private static final String[] SCRIPT_DATABASE_CREATE_CONTATO = new String[] {"create table "+NOME_BANCO_CONTATO+" (_id integer primary key, nome text, telefone text, latitude double, longitude double, principal int, local int);"};
 
 	private static SQLiteDatabase dbContato;

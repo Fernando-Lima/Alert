@@ -2,9 +2,7 @@ package com.example.fernando.alert;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
@@ -13,14 +11,12 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import DAO.ContatoDAO;
-import DAO.LocalDAO;
+import DAO.ContatoWSDAO;
 import DAO.UsuarioDAO;
 import model.Contato;
 import model.Usuario;
@@ -32,7 +28,10 @@ public class MainActivity extends DebugActivity
     String message;
     ContatoDAO dao;
     UsuarioDAO usuarioDAO;
+    ContatoWSDAO contatoWSDAO;
     String telefone;
+    String telefoneUsuario;
+    String nomeUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +40,7 @@ public class MainActivity extends DebugActivity
 
         dao = new ContatoDAO(this);
         usuarioDAO = new UsuarioDAO(this);
-        checked();
-        checkedLocal();
-
+        contatoWSDAO = new ContatoWSDAO();
         btnOk = (Button) findViewById(R.id.main_btn_ok);
         btnAlerta = (Button) findViewById(R.id.main_btn_alerta);
 
@@ -72,17 +69,7 @@ public class MainActivity extends DebugActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
     }
-
-    @Override
-    protected void onResume() {
-        checked();
-        checkedLocal();
-        super.onResume();
-    }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -117,6 +104,14 @@ public class MainActivity extends DebugActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    protected void onResume() {
+        checked();
+        checkedLocal();
+        super.onResume();
+    }
+
 
     public void enviarMensagem(View v){
         if (checked() == false) {
@@ -166,5 +161,4 @@ public class MainActivity extends DebugActivity
             return true;
         }
     }
-
 }

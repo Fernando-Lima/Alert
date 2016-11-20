@@ -18,6 +18,7 @@ import model.Usuario;
 
 public class UsuarioDAO {
     SQLiteDatabase dbUsuario;// representa a conexão com o banco
+    Boolean checked;
 
     public UsuarioDAO(Context context){
         dbUsuario= BancoDados.getDbUsuario(context); //Cria o banco
@@ -32,19 +33,16 @@ public class UsuarioDAO {
         dbUsuario.insert("tbl_usuario", null, values);
     }
 
-    public Usuario buscarUsuario(String id){
-        String[] colunas = new String[]{"nome"};
-        String[] args = new String[]{id};
-
-        Cursor c = dbUsuario.query("tbl_usuario",colunas,"_id = ?",args,null,null,null);
+    public Usuario buscarUsuario(){
+        String[] colunas = new String[]{"_id","nome","telefone"};
+        Cursor c = dbUsuario.rawQuery("SELECT nome, telefone FROM tbl_usuario",null);
 
         c.moveToFirst();
         Usuario usuario = new Usuario();
         usuario.setId(c.getLong(c.getColumnIndex("_id")));
         usuario.setNome(c.getString(c.getColumnIndex("nome")));
         usuario.setTelefone(c.getString(c.getColumnIndex("telefone")));
-        usuario.setLatitude(c.getDouble(c.getColumnIndex("latitude")));
-        usuario.setLongitude(c.getDouble(c.getColumnIndex("longitude")));
+
         return usuario;
     }
 
@@ -63,8 +61,8 @@ public class UsuarioDAO {
                 usuario.setId(c.getLong(c.getColumnIndex("_id")));
                 usuario.setNome(c.getString(c.getColumnIndex("nome")));
                 usuario.setTelefone(c.getString(c.getColumnIndex("telefone")));
-                usuario.setLatitude(c.getDouble(c.getColumnIndex("latitude")));
-                usuario.setLongitude(c.getDouble(c.getColumnIndex("longitude")));
+                usuario.setLatitude(c.getString(c.getColumnIndex("latitude")));
+                usuario.setLongitude(c.getString(c.getColumnIndex("longitude")));
 
                 usuarios.add(usuario);
             }while (c.moveToNext());
@@ -72,4 +70,21 @@ public class UsuarioDAO {
         c.close();
         return usuarios;
     }
+
+    public boolean checarTabela(){
+        Cursor cur = dbUsuario.rawQuery("SELECT COUNT(*) FROM tbl_usuario", null);
+        if (cur != null) {
+            cur.moveToFirst();
+            if (cur.getInt (0) == 0) {
+                //tabela tbl_usuario vazia
+                checked = false;
+            } else {
+                //tabela tbl_usuario contém dados
+                checked = true;
+            }
+        }
+        return checked;
+    }
+
+
 }

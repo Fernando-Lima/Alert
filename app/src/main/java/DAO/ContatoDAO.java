@@ -148,10 +148,8 @@ public class ContatoDAO {
         if (cur != null) {
             cur.moveToFirst();
             if (cur.getInt (0) == 0) {
-                //nenhum contato principal
                 checkedLocal = false;
             } else {
-                //contem contato principal
                 checkedLocal = true;
             }
         }

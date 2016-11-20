@@ -3,6 +3,7 @@
     package="com.example.fernando.alert">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-permission android:name="android.permission.SEND_SMS" /> <!-- Permissão para envio de mensagem -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Permissão para acesso ao gps telefone -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Permissão para localização GPS -->

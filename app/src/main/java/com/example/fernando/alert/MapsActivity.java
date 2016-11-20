@@ -26,7 +26,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LocationManager locationManager;
     private static final String TAG = "Erro";
     private GoogleMap map;
-    private String nome = "Nadine";
+    private String nome = "4999990092";
     private Double latitude = -26.873576;
     private Double longitude = -52.4085978;
 
@@ -46,17 +46,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         this.map = map;
 
         try {
-            //Pegar minha localização atual com o locationManager
-            //locationManager =(LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-
-            //Objeto Criteria permite a realizar buscas ao elemento Provider
-            //Criteria criteria = new Criteria();
-            //Pega o melhor provider
-            //String provider = locationManager.getBestProvider(criteria, true);
-
-
-            // Add a marker in Sydney, Australia, and move the camera.
             map.getUiSettings().setZoomControlsEnabled(true); // Botão zoom
             map.setOnMapLongClickListener(this); //segurar precionado para obter coordenadas
             map.setMyLocationEnabled(true);// Botão para pegar minha localização atual
@@ -84,7 +73,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void addMarcador(GoogleMap map, LatLng latLng){
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng).title("Minha localizacao").snippet(nome);
+        markerOptions.position(latLng).title("Maria").snippet(nome);
         Marker marker = map.addMarker(markerOptions);
     }
 
@@ -94,7 +83,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationManager =(LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-
     }
 
     @Override

@@ -11,10 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 
-import DAO.LocalDAO;
+import DAO.UsuarioWSDAO;
 import DAO.UsuarioDAO;
 import model.Usuario;
 
@@ -27,8 +26,11 @@ public class HellowActivity extends AppCompatActivity {
     private AlertDialog alertDialog;
     private static final String TAG = "error";
 
+    public static String NOME;
+    public static String TELEFONE;
+
     UsuarioDAO dao;
-    LocalDAO localDAO;
+    UsuarioWSDAO localDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class HellowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hellow);
 
         dao = new UsuarioDAO(this);
-        localDAO = new LocalDAO();
+        localDAO = new UsuarioWSDAO();
 
         edtNome = (EditText)findViewById(R.id.hellow_edt_nome);
         edtTelefone = (EditText)findViewById(R.id.hellow_edt_numero);
@@ -87,8 +89,10 @@ public class HellowActivity extends AppCompatActivity {
         Usuario usuario = new Usuario();
         usuario.setNome(edtNome.getText().toString());
         usuario.setTelefone(edtTelefone.getText().toString());
-        usuario.setLatitude(0.0);
-        usuario.setLongitude(0.0);
+        usuario.setLatitude("0");
+        usuario.setLongitude("0");
+        NOME = edtNome.getText().toString();
+        TELEFONE = edtTelefone.getText().toString();
         dao.salvar(usuario);
     }
 
