@@ -11,6 +11,7 @@ public class Usuario {
     private String telefoneContato;
     private String latitude;
     private String longitude;
+    private Integer cod;
 
     public Long getId() {return id;}
 
@@ -44,12 +45,17 @@ public class Usuario {
 
     public void setLongitude(String longitude) {this.longitude = longitude;}
 
-    public Usuario(Long id, String nome, String telefone, String latitude, String longitude) {
+    public Integer getCod() {return cod;}
+
+    public void setCod(Integer cod) {this.cod = cod;}
+
+    public Usuario(Long id, String nome, String telefone, String latitude, String longitude, Integer cod) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.cod = cod;
     }
     public  Usuario(){
 

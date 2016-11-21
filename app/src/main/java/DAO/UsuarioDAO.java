@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.example.fernando.alert.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,21 +31,22 @@ public class UsuarioDAO {
         ContentValues values = new ContentValues();
         values.put("nome", usuario.getNome());
         values.put("telefone",usuario.getTelefone());
-        values.put("latitude",usuario.getLatitude());
-        values.put("longitude",usuario.getLongitude());
+        values.put("cod", usuario.getCod());
         dbUsuario.insert("tbl_usuario", null, values);
     }
 
     public Usuario buscarUsuario(){
         String[] colunas = new String[]{"_id","nome","telefone"};
-        Cursor c = dbUsuario.rawQuery("SELECT nome, telefone FROM tbl_usuario",null);
-
-        c.moveToFirst();
+        Cursor c = dbUsuario.query("tbl_usuario",colunas,"cod = 1",null,null,null,null);
         Usuario usuario = new Usuario();
-        usuario.setId(c.getLong(c.getColumnIndex("_id")));
-        usuario.setNome(c.getString(c.getColumnIndex("nome")));
-        usuario.setTelefone(c.getString(c.getColumnIndex("telefone")));
 
+        if(c.moveToFirst()){
+            do {
+                usuario.setNome(c.getString(c.getColumnIndex("nome")));
+                usuario.setTelefone(c.getString(c.getColumnIndex("telefone")));
+            }while (c.moveToNext());
+        }
+        c.close();
         return usuario;
     }
 
@@ -61,8 +65,6 @@ public class UsuarioDAO {
                 usuario.setId(c.getLong(c.getColumnIndex("_id")));
                 usuario.setNome(c.getString(c.getColumnIndex("nome")));
                 usuario.setTelefone(c.getString(c.getColumnIndex("telefone")));
-                usuario.setLatitude(c.getString(c.getColumnIndex("latitude")));
-                usuario.setLongitude(c.getString(c.getColumnIndex("longitude")));
 
                 usuarios.add(usuario);
             }while (c.moveToNext());

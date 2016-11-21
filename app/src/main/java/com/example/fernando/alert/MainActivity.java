@@ -30,8 +30,6 @@ public class MainActivity extends DebugActivity
     UsuarioDAO usuarioDAO;
     ContatoWSDAO contatoWSDAO;
     String telefone;
-    String telefoneUsuario;
-    String nomeUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

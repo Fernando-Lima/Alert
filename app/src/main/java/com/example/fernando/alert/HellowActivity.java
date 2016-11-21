@@ -26,9 +26,6 @@ public class HellowActivity extends AppCompatActivity {
     private AlertDialog alertDialog;
     private static final String TAG = "error";
 
-    public static String NOME;
-    public static String TELEFONE;
-
     UsuarioDAO dao;
     UsuarioWSDAO localDAO;
 
@@ -89,10 +86,7 @@ public class HellowActivity extends AppCompatActivity {
         Usuario usuario = new Usuario();
         usuario.setNome(edtNome.getText().toString());
         usuario.setTelefone(edtTelefone.getText().toString());
-        usuario.setLatitude("0");
-        usuario.setLongitude("0");
-        NOME = edtNome.getText().toString();
-        TELEFONE = edtTelefone.getText().toString();
+        usuario.setCod(1);
         dao.salvar(usuario);
     }
 

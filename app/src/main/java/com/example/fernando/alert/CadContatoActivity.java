@@ -7,6 +7,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import DAO.ContatoDAO;
 import DAO.ContatoWSDAO;
+import DAO.UsuarioDAO;
 import model.Contato;
 import model.Usuario;
 
@@ -30,18 +32,26 @@ public class CadContatoActivity extends DebugActivity implements LocationListene
     int local;
     String  latitude, longitude;
     ContatoWSDAO contatoWSDAO;
+    String nomeUsuario;
+    String telefoneUsuario;
 
     private static final String TAG = "banco";
 
     ContatoDAO dao;
-
+    UsuarioDAO usuarioDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cad_contato);
 
         dao = new ContatoDAO(this);
+        usuarioDAO = new UsuarioDAO(this);
         contatoWSDAO = new ContatoWSDAO();
+
+        if(Build.VERSION.SDK_INT>9){
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
         edtCodContato = (EditText)findViewById(R.id.cadContato_edt_codigo);
         edtNomeContato = (EditText)findViewById(R.id.cadContato_edt_nome);
@@ -117,6 +127,7 @@ public class CadContatoActivity extends DebugActivity implements LocationListene
 
     @Override
     protected void onResume() {
+        pegarUsuario();
         super.onResume();
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, this);
@@ -130,19 +141,22 @@ public class CadContatoActivity extends DebugActivity implements LocationListene
         contato.setLatitude(0.0);
         contato.setLongitude(0.0);
         contato.setPrincipal(principal);
-        contato.setLocal(local);
-        dao.salvar(contato);
-
         if(controleSwitchLocal.isChecked()){
             try {
-                inserirContatoWS();
-                Log.i("ws","contato inserido com sucesso");
+                if (latitude == null){
+                    Toast.makeText(this,"o aplicativo não conseguiu pegar localização de GPS",Toast.LENGTH_SHORT).show();
+                    local = 0;
+                }else {
+                    inserirContatoWS();
+                    Log.i("ws","contato inserido com sucesso");
+                }
             }catch (Exception e){
                 e.printStackTrace();
                 Log.i("ws","falha ao inserir contato");
             }
         }
-
+        contato.setLocal(local);
+        dao.salvar(contato);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -167,19 +181,22 @@ public class CadContatoActivity extends DebugActivity implements LocationListene
         contato.setNome(edtNomeContato.getText().toString());
         contato.setTelefone(edtTelefoneContato.getText().toString());
         contato.setPrincipal(principal);
-        contato.setLocal(local);
-        dao.alterarContato(contato);
-
         if(controleSwitchLocal.isChecked()){
             try {
-                inserirContatoWS();
-                Log.i("ws","contato inserido com sucesso");
+                if (latitude == null){
+                    Toast.makeText(this,"o aplicativo não conseguiu pegar localização de GPS",Toast.LENGTH_SHORT).show();
+                    local = 0;
+                }else {
+                    inserirContatoWS();
+                    Log.i("ws","contato inserido com sucesso");
+                }
             }catch (Exception e){
                 e.printStackTrace();
                 Log.i("ws","falha ao inserir contato");
             }
         }
-
+        contato.setLocal(local);
+        dao.alterarContato(contato);
         finish();
     }
 
@@ -215,12 +232,23 @@ public class CadContatoActivity extends DebugActivity implements LocationListene
     public void onProviderDisabled(String provider) {
 
     }
+    public void pegarUsuario(){
+        Usuario usuario = new Usuario();
+        usuario = usuarioDAO.buscarUsuario();
+        if(usuarioDAO.checarTabela() != true){
+            Toast.makeText(this, "table empty", Toast.LENGTH_SHORT).show();
+        }else {
+            nomeUsuario = usuario.getNome().toString();
+            telefoneUsuario = usuario.getTelefone().toString();
+        }
+    }
+
     public void inserirContatoWS(){
         Usuario usuario = new Usuario();
 
         usuario.setId(1L);
-        usuario.setNome(HellowActivity.NOME);
-        usuario.setTelefone(HellowActivity.TELEFONE);
+        usuario.setNome(nomeUsuario);
+        usuario.setTelefone(telefoneUsuario);
         usuario.setTelefoneContato(edtTelefoneContato.getText().toString());
         usuario.setLatitude( latitude);
         usuario.setLongitude(longitude);

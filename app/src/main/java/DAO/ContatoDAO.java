@@ -128,7 +128,6 @@ public class ContatoDAO {
         String[] colunas = new String[]{"_id","nome","telefone","latitude","longitude","principal"};
         Cursor c = dbContato.query("tbl_contato",colunas,"principal = 1",null,null,null,null);
         Contato contato = new Contato();
-        contato.setNome("");
 
         if(c.moveToFirst()){
             do {
