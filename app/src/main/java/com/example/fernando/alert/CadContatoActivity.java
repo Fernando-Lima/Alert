@@ -252,7 +252,9 @@ public class CadContatoActivity extends DebugActivity implements LocationListene
         usuario.setTelefoneContato(edtTelefoneContato.getText().toString());
         usuario.setLatitude( latitude);
         usuario.setLongitude(longitude);
+        usuario.setData("0000-00-00T00:00:00");
         Toast.makeText(this,"Latitude: " + latitude +"Longitude: "+ longitude,Toast.LENGTH_SHORT).show();
         contatoWSDAO.inserir(usuario);
+
     }
 }

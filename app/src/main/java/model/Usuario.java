@@ -12,6 +12,7 @@ public class Usuario {
     private String latitude;
     private String longitude;
     private Integer cod;
+    private String data;
 
     public Long getId() {return id;}
 
@@ -48,6 +49,10 @@ public class Usuario {
     public Integer getCod() {return cod;}
 
     public void setCod(Integer cod) {this.cod = cod;}
+
+    public String getData() {return data;}
+
+    public void setData(String data) {this.data = data;}
 
     public Usuario(Long id, String nome, String telefone, String latitude, String longitude, Integer cod) {
         this.id = id;

@@ -31,6 +31,7 @@ public class ContatoWSDAO {
         cto.addProperty("telefoneUsuario", usuario.getTelefoneContato());
         cto.addProperty("latitude", usuario.getLatitude());
         cto.addProperty("longitude", usuario.getLongitude());
+        cto.addProperty("data",usuario.getData());
 
         insert.addSoapObject(cto);
 

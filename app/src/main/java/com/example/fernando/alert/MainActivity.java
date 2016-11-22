@@ -1,6 +1,10 @@
 package com.example.fernando.alert;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -22,7 +26,7 @@ import model.Contato;
 import model.Usuario;
 
 public class MainActivity extends DebugActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
 
     Button btnOk, btnAlerta;
     String message;
@@ -68,6 +72,7 @@ public class MainActivity extends DebugActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -97,7 +102,6 @@ public class MainActivity extends DebugActivity
             Intent it = new Intent(this, AjudaActivity.class);
             startActivity(it);
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -108,6 +112,9 @@ public class MainActivity extends DebugActivity
         checked();
         checkedLocal();
         super.onResume();
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,600000,50,this);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,600000,50,this);
     }
 
 
@@ -151,12 +158,34 @@ public class MainActivity extends DebugActivity
         }
     }
 
-    public boolean checkedLocal(){
+    public void checkedLocal(){
         if (dao.checarLocalContato()!=true){
             Toast.makeText(this,"nenhum contato para enviar localização",Toast.LENGTH_SHORT).show();
-            return false;
         }else {
-            return true;
+
         }
+    }
+
+    //Toda vez que alterar minha localização executa este metodo
+    @Override
+    public void onLocationChanged(Location location) {
+        String latitude = String.valueOf(location.getLatitude()).toString();
+        String longitude = String.valueOf(location.getLongitude()).toString();
+        Toast.makeText(this,"Latitude:   " + latitude+ "  Logitude:   " + longitude,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }
