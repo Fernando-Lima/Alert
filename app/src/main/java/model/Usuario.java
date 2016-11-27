@@ -54,22 +54,7 @@ public class Usuario {
 
     public void setData(String data) {this.data = data;}
 
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "nome='" + nome + '\'' +
-                ", data='" + data + '\'' +
-                '}';
-    }
 
-    public Usuario(Long id, String nome, String telefone, String latitude, String longitude, Integer cod) {
-        this.id = id;
-        this.nome = nome;
-        this.telefone = telefone;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.cod = cod;
-    }
     public  Usuario(){
 
     }
