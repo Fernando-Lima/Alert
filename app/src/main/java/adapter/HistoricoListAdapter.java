@@ -45,10 +45,12 @@ public class HistoricoListAdapter extends ArrayAdapter<Usuario> {
 
         TextView tvNome = (TextView)view.findViewById(R.id.list_item_historico_tv_nome);
         TextView tvData = (TextView) view.findViewById(R.id.list_item_historico_tv_data);
+        TextView tvTelefone = (TextView)view.findViewById(R.id.list_item_historico_tv_telefone);
 
         Usuario usuario = usuarios.get(position);
         tvNome.setText(usuario.getNome());
         tvData.setText(usuario.getData());
+        tvTelefone.setText(usuario.getTelefoneContato());
 
 
         return view;

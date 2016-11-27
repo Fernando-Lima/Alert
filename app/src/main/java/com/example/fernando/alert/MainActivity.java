@@ -92,9 +92,6 @@ public class MainActivity extends DebugActivity
         if (id == R.id.nav_contato) {
             Intent it = new Intent(this, ContatoActivity.class);
             startActivity(it);
-        } else if (id == R.id.nav_localizacao) {
-            Intent it = new Intent(this, MapsActivity.class);
-            startActivity(it);
         } else if (id == R.id.nav_historico) {
             Intent it = new Intent(this, HistoricoActivity.class);
             startActivity(it);
