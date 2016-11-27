@@ -1,5 +1,6 @@
 package com.example.fernando.alert;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -26,7 +27,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LocationManager locationManager;
     private static final String TAG = "Erro";
     private GoogleMap map;
-    private String nome = "4999990092";
+    private String telefone;
+    private String nome ;
+    private String data;
     private Double latitude = -26.873576;
     private Double longitude = -52.4085978;
 
@@ -38,6 +41,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        Intent it = getIntent();
+        if(!it.getStringExtra("nome").equals("")){
+         //   edtCodContato.setText(it.getStringExtra("id"));
+          //  buscarContato();
+
+            nome = it.getStringExtra("nome");
+            data = it.getStringExtra("data");
+            telefone = it.getStringExtra("telefone");
+            latitude = Double.parseDouble(it.getStringExtra("latitude"));
+            longitude = Double.parseDouble(it.getStringExtra("longitude"));
+
+            Log.i("putExtra", it.getStringExtra("nome"));
+            Log.i("putExtra", it.getStringExtra("data"));
+            Log.i("putExtra", it.getStringExtra("latitude"));
+            Log.i("putExtra", it.getStringExtra("longitude"));
+            Log.i("putExtra", it.getStringExtra("telefone"));
+        }
     }
 
     @Override
@@ -54,12 +75,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.e(TAG,getLocalClassName() + " Error ", ex);
         }
 
-        LatLng sydney = new LatLng(latitude, longitude);
+        LatLng latLng = new LatLng(latitude, longitude);
         MarkerOptions marker = new MarkerOptions();
-        marker.position(sydney);
-        marker.title("Marker in Sydney");
+        marker.position(latLng).title(nome).snippet(data);
         map.addMarker(marker);
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        int zoom =15;
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latLng,zoom);
+        map.moveCamera(update);
 
     }
 
@@ -73,7 +95,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void addMarcador(GoogleMap map, LatLng latLng){
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng).title("Maria").snippet(nome);
+        markerOptions.position(latLng).title(nome);
+        markerOptions.position(latLng).snippet(telefone);
+        markerOptions.position(latLng).snippet(data);
+        Marker marker = map.addMarker(markerOptions);
+    }
+
+    public void addMarcadorTitulo(GoogleMap map, LatLng latLng){
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng).title(nome);
         Marker marker = map.addMarker(markerOptions);
     }
 

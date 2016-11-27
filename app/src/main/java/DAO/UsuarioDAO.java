@@ -50,6 +50,21 @@ public class UsuarioDAO {
         return usuario;
     }
 
+    public Usuario buscarTudoUsuario(){
+        String[] colunas = new String[]{"_id","nome","telefone"};
+        Cursor c = dbUsuario.query("tbl_usuario",colunas,"cod = 1",null,null,null,null);
+        Usuario usuario = new Usuario();
+
+        if(c.moveToFirst()){
+            do {
+                usuario.setNome(c.getString(c.getColumnIndex("nome")));
+                usuario.setTelefone(c.getString(c.getColumnIndex("telefone")));
+            }while (c.moveToNext());
+        }
+        c.close();
+        return usuario;
+    }
+
     public List<Usuario> listar(){
         String[] colunas = new String[]{"_id", "nome", "telefone", "latitude", "longitude"};
         List<Usuario> usuarios;
